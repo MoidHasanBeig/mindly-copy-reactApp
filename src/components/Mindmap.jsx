@@ -14,7 +14,7 @@ function Mindmap() {
   let [shouldRotate, setShouldRotate] = useState(false);
   let [initialAngle, setInitialAngle] = useState(0);
   let [finalAngle, setFinalAngle] = useState(0);
-  let [rotAngle, setRotAngle] = useState(initialAngle);
+  let [rotAngle, setRotAngle] = useState(0);
 
   function startRotate(e) {
     e.persist();
@@ -26,11 +26,7 @@ function Mindmap() {
   }
 
   function stopRotate() {
-    setFinalAngle( () => {
-      let endAngle;
-      endAngle=endAngle+rotAngle;
-      return endAngle;
-    });
+    setFinalAngle(rotAngle);
     setShouldRotate(false);
   }
 
@@ -39,7 +35,7 @@ function Mindmap() {
     if (shouldRotate) {
       setRotAngle( (prevAngle) => {
         let mouseAngle = dragRotate(e);
-        return mouseAngle>initialAngle ? mouseAngle-initialAngle : 360+mouseAngle-initialAngle;
+        return mouseAngle>initialAngle ? mouseAngle-initialAngle+finalAngle : 360+mouseAngle-initialAngle+finalAngle;
       });
     }
   }
@@ -48,7 +44,7 @@ function Mindmap() {
     <div className="circular-container" onMouseMove={(e)=>rotateElements(e)} onMouseDown={(e)=>startRotate(e)} onMouseUp={stopRotate}>
       <NoteballMain text={notes[0]}/> {
         notes.map((note, index) => {
-          console.log(commAngle * index + rotAngle,initialAngle,rotAngle);
+          console.log(finalAngle);
           return <Noteball key={index} id={index} angle={commAngle * index + rotAngle} text={note}/>
         })
       }

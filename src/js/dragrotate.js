@@ -4,7 +4,6 @@ function dragRotate(e) {
   if (angle < 0) {
     angle += 360;
   }
-  console.log(angle);
   return angle;
 }
 
