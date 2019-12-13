@@ -41,10 +41,9 @@ function Mindmap() {
   }
 
   return (<div>
-    <div className="circular-container" onMouseMove={(e)=>rotateElements(e)} onMouseDown={(e)=>startRotate(e)} onMouseUp={stopRotate}>
+    <div className="circular-container" onTouchMove={(e)=>rotateElements(e)} onTouchStart={(e)=>startRotate(e)} onTouchEnd={stopRotate}>
       <NoteballMain text={notes[0]}/> {
         notes.map((note, index) => {
-          console.log(finalAngle);
           return <Noteball key={index} id={index} angle={commAngle * index + rotAngle} text={note}/>
         })
       }
