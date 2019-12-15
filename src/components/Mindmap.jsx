@@ -2,8 +2,7 @@ import React, {useState} from "react";
 import Noteball from "./Noteball";
 import NoteballMain from "./NoteballMain";
 
-import dragRotate from "../js/dragrotate"
-import initAngle from "../js/initangle"
+import touchAngle from "../js/touchangle"
 
 import data from "../data";
 
@@ -19,7 +18,7 @@ function Mindmap() {
   function startRotate(e) {
     e.persist();
     setInitialAngle( () => {
-      let startAngle = initAngle(e);
+      let startAngle = touchAngle(e);
       return startAngle;
     });
     setShouldRotate(true);
@@ -34,7 +33,7 @@ function Mindmap() {
     e.persist();
     if (shouldRotate) {
       setRotAngle( (prevAngle) => {
-        let mouseAngle = dragRotate(e);
+        let mouseAngle = touchAngle(e);
         return mouseAngle>initialAngle ? mouseAngle-initialAngle+finalAngle : 360+mouseAngle-initialAngle+finalAngle;
       });
     }
