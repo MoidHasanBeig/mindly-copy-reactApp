@@ -1,9 +1,10 @@
 #root {
   position: fixed;
+  font-family: monospace;
 
   .circular-container {
-    height: 17em;
-    width: 17em;
+    height: 17rem;
+    width: 17rem;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -27,13 +28,43 @@
     }
   }
 
+  .noteball-main {
+  }
+
   .addnote {
+    z-index: 20;
     background-image: url('../images/addnote.svg');
     height: 15px;
     width: 15px;
     background-size: 100% 100%;
   }
 
-  .noteball-main {
+  .notearea {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 30;
+
+    .header-area {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+
+      .header-btn {
+        width: 50%;
+        background: green;
+        color: #fff;
+        text-align: center;
+        margin: 5px;
+
+        p {
+          font-size: 1.2rem;
+          padding: 0;
+        }
+      }
+    }
   }
 }

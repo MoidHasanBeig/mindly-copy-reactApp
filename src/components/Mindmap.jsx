@@ -7,7 +7,7 @@ import touchAngle from "../js/touchangle"
 
 import data from "../data";
 
-function Mindmap() {
+function Mindmap(props) {
 
   let [notes, setNotes] = useState(data);
   let commAngle = 360 / notes.length;
@@ -42,13 +42,29 @@ function Mindmap() {
   }
 
   return (<div>
-    <div className="circular-container" onTouchMove={(e)=>rotateElements(e)} onTouchStart={(e)=>startRotate(e)} onTouchEnd={stopRotate}>
+    <div
+      className="circular-container"
+      onTouchMove={(e)=>rotateElements(e)}
+      onTouchStart={(e)=>startRotate(e)}
+      onTouchEnd={stopRotate}
+      >
       <NoteballMain text={notes[0]}/> {
         notes.map((note, index) => {
-          return ( <div>
-            <Noteball key={index} id={index} angle={commAngle * index + rotAngle} text={note}/>
-            <AddNote key={-index} id={index} angle={commAngle * index + offsetAngle + rotAngle} text={note}/>
-          </div>
+          return (
+            <div>
+              <Noteball
+                key={index}
+                id={index}
+                angle={commAngle * index + rotAngle}
+                text={note}
+              />
+              <AddNote
+                key={index+100}
+                id={index}
+                angle={commAngle * index + offsetAngle + rotAngle}
+                onAdd={props.showNoteArea}
+              />
+            </div>
           );
         })
       }
