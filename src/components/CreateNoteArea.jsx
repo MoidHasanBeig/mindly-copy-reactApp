@@ -16,8 +16,8 @@ function CreateNoteArea() {
   return (
     <div className="notearea">
       <div className="header-area">
-        <NoteHeaderBtn option="TEXT" onSelect={toggleTextAndColor} btnNo="1" />
-        <NoteHeaderBtn option="COLOR" onSelect={toggleTextAndColor} btnNo="2" />
+        <NoteHeaderBtn option="TEXT" onSelect={toggleTextAndColor} />
+        <NoteHeaderBtn option="COLOR" onSelect={toggleTextAndColor} />
       </div>
       <div className="body-area">
         {textElseColor ? <NoteTextArea /> : <NoteColorArea />}
