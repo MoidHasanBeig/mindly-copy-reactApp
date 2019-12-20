@@ -7,9 +7,9 @@ function CreateNoteArea() {
 
   let [textElseColor,setTextElseToggle] = useState(true);
 
-  function toggleTextAndColor() {
-    setTextElseToggle( (prevState) => {
-      return prevState ? false : true;
+  function toggleTextAndColor(opt) {
+    setTextElseToggle( () => {
+      return opt === "TEXT" ? true : false;
     });
   }
 
