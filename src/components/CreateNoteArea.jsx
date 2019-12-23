@@ -1,28 +1,32 @@
 import React,{ useState } from "react";
 import NoteHeaderBtn from "./NoteHeaderBtn";
+import FooterActionBtn from "./FooterActionBtn";
 import NoteTextArea from "./NoteTextArea";
 import NoteColorArea from "./NoteColorArea";
 
 function CreateNoteArea() {
 
-  let [textElseColor,setTextElseToggle] = useState(true);
+  let [textElseColor,setTextElseToggle] = useState("TEXT");
 
   function toggleTextAndColor(opt) {
     setTextElseToggle( () => {
-      return opt === "TEXT" ? true : false;
+      return opt;
     });
   }
 
   return (
     <div className="notearea">
       <div className="header-area">
-        <NoteHeaderBtn option="TEXT" onSelect={toggleTextAndColor} />
-        <NoteHeaderBtn option="COLOR" onSelect={toggleTextAndColor} />
+        <NoteHeaderBtn option="TEXT" onSelect={toggleTextAndColor} isActive={textElseColor} />
+        <NoteHeaderBtn option="COLOR" onSelect={toggleTextAndColor} isActive={textElseColor} />
       </div>
       <div className="body-area">
-        {textElseColor ? <NoteTextArea /> : <NoteColorArea />}
+        {textElseColor === "TEXT" ? <NoteTextArea /> : <NoteColorArea />}
       </div>
-      <div className="footer-area"></div>
+      <div className="footer-area">
+        <FooterActionBtn action="cancel-btn" />
+        <FooterActionBtn action="save-btn" />
+      </div>
     </div>
   );
 }

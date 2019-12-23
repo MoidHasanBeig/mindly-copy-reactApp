@@ -25,6 +25,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%,-50%);
+      color: #EEE;
     }
   }
 
@@ -45,7 +46,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: white;
+    background: #DDD;
     z-index: 30;
 
     .header-area {
@@ -66,8 +67,98 @@
         text-align: center;
 
         p {
-          font-size: 1.2rem;
+          font-size: 1.0rem;
           padding: 0;
+        }
+      }
+
+    }
+    .body-area {
+      height: -webkit-fill-available;
+
+      .note-color-area {
+        margin: 7px;
+        background: #FFF;
+        height: 100%;
+
+        .color-view {
+          height: 30%;
+          width: 100%;
+          position: fixed;
+          left: 0;
+
+          svg {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+          }
+        }
+        .color-picker {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
+          position: fixed;
+          width: 100%;
+          bottom: 12%;
+          left: 0;
+
+          .colorball {
+            position: relative;
+            height: min-content;
+            margin: 15px;
+          }
+        }
+      }
+
+      .note-text-area {
+        display: flex;
+        flex-direction: column;
+        padding: 7px;
+        height: -webkit-fill-available;
+
+        input {
+          height: 5%;
+          min-height: 36px;
+          border: 0;
+          padding-left: 10px;
+        }
+        textarea {
+          margin-top: 7px;
+          height: -webkit-fill-available;
+          resize: none;
+          border: 0;
+          padding-left: 10px;
+          padding-top: 10px;
+        }
+
+        input::placeholder, textarea::placeholder {
+          color: rgba(0,0,0,0.3);
+        }
+      }
+    }
+    .footer-area {
+      position: fixed;
+      right: 2.5%;
+      bottom: 2%;
+      display: flex;
+      width: 40%;
+      justify-content: space-around;
+
+      .footer-btn {
+        position: relative;
+
+        .save-btn {
+          background-image: url('../images/save.svg');
+          height: 55px;
+          width: 55px;
+          background-size: 100% 100%;
+        }
+        .cancel-btn {
+          background-image: url('../images/cancel.svg');
+          height: 55px;
+          width: 55px;
+          background-size: 100% 100%;
         }
       }
     }
