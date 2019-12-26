@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Noteball from "./Noteball";
 import AddNote from "./AddNote";
 import NoteballMain from "./NoteballMain";
+import BreadCrumb from "./BreadCrumb";
 
 import touchAngle from "../js/touchangle"
 
@@ -9,13 +10,14 @@ import data from "../data";
 
 function Mindmap(props) {
 
-  let [notes, setNotes] = useState(data.a0);
-  let commAngle = 360 / (notes.length-1);
+  let [notes, setNotes] = useState(data.a00);
+  let commAngle = 360 / (notes.length-2);
   let offsetAngle = commAngle/2;
   let [shouldRotate, setShouldRotate] = useState(false);
   let [initialAngle, setInitialAngle] = useState(0);
   let [finalAngle, setFinalAngle] = useState(0);
   let [rotAngle, setRotAngle] = useState(0);
+  let [backState,setBackState] = useState("");
 
   function startRotate(e) {
     e.persist();
@@ -44,10 +46,12 @@ function Mindmap(props) {
   function navigateNotes(nid) {
     if(data[nid]){
       setNotes(data[nid]);
+      console.log(nid.substring(0,3));
     }
   }
 
   return (<div>
+    {notes[1].id!== "a00" && <BreadCrumb />}
     <div
       className="circular-container"
       onTouchMove={(e)=>rotateElements(e)}
@@ -56,7 +60,7 @@ function Mindmap(props) {
       >
       {
         notes.map((note, index) => {
-          if (index!==0) {
+          if (index>1) {
             return (
               <div>
                 <Noteball
@@ -80,7 +84,7 @@ function Mindmap(props) {
             return (
               <div>
                 <NoteballMain key={note.id} text={note.data} />
-                {notes.length<2 && (
+                {notes.length<3 && (
                   <div>
                     <AddNote
                       angle={rotAngle}
