@@ -9,8 +9,8 @@ import data from "../data";
 
 function Mindmap(props) {
 
-  let [notes, setNotes] = useState(data);
-  let commAngle = 360 / notes.length;
+  let [notes, setNotes] = useState(data.a0);
+  let commAngle = 360 / (notes.length-1);
   let offsetAngle = commAngle/2;
   let [shouldRotate, setShouldRotate] = useState(false);
   let [initialAngle, setInitialAngle] = useState(0);
@@ -41,6 +41,12 @@ function Mindmap(props) {
     }
   }
 
+  function navigateNotes(nid) {
+    if(data[nid]){
+      setNotes(data[nid]);
+    }
+  }
+
   return (<div>
     <div
       className="circular-container"
@@ -48,24 +54,47 @@ function Mindmap(props) {
       onTouchStart={(e)=>startRotate(e)}
       onTouchEnd={stopRotate}
       >
-      <NoteballMain text={notes[0]}/> {
+      {
         notes.map((note, index) => {
-          return (
-            <div>
-              <Noteball
-                key={index}
-                id={index}
-                angle={commAngle * index + rotAngle}
-                text={note}
-              />
-              <AddNote
-                key={index+100}
-                id={index}
-                angle={commAngle * index + offsetAngle + rotAngle}
-                onAdd={props.showNoteArea}
-              />
-            </div>
-          );
+          if (index!==0) {
+            return (
+              <div>
+                <Noteball
+                  key={note.id}
+                  id={index}
+                  id2={note.id}
+                  angle={commAngle * index + rotAngle}
+                  text={note.data}
+                  onExplore={navigateNotes}
+                />
+                <AddNote
+                  key={index}
+                  id={index}
+                  angle={commAngle * index + offsetAngle + rotAngle}
+                  onAdd={props.showNoteArea}
+                />
+              </div>
+            );
+          }
+          else {
+            return (
+              <div>
+                <NoteballMain key={note.id} text={note.data} />
+                {notes.length<2 && (
+                  <div>
+                    <AddNote
+                      angle={rotAngle}
+                      onAdd={props.showNoteArea}
+                    />
+                    <AddNote
+                      angle={rotAngle+180}
+                      onAdd={props.showNoteArea}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          }
         })
       }
     </div>
