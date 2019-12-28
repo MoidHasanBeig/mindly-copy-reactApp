@@ -1,12 +1,12 @@
 import React from "react";
 
-function BreadCrumb() {
+function BreadCrumb(props) {
   return (
-    <div className = "bread-crumb">
+    <div className = "bread-crumb" onClick={props.onBack}>
       <svg height="150" width="150">
         <circle cx="0" cy="0" r="150" fill="#5CAB7D" />
       </svg>
-      <p>a</p>
+      <p>{props.text}</p>
     </div>
   );
 }

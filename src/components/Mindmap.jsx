@@ -10,14 +10,14 @@ import data from "../data";
 
 function Mindmap(props) {
 
-  let [notes, setNotes] = useState(data.a00);
-  let commAngle = 360 / (notes.length-2);
+  let [notes, setNotes] = useState(data[0]);
+  let [prevNotes,setPrevNotes] = useState(data[0]);
+  let commAngle = 360 / (notes.subdata.length);
   let offsetAngle = commAngle/2;
   let [shouldRotate, setShouldRotate] = useState(false);
-  let [initialAngle, setInitialAngle] = useState(0);
-  let [finalAngle, setFinalAngle] = useState(0);
-  let [rotAngle, setRotAngle] = useState(0);
-  let [backState,setBackState] = useState("");
+  let [initialAngle, setInitialAngle] = useState(20);
+  let [finalAngle, setFinalAngle] = useState(20);
+  let [rotAngle, setRotAngle] = useState(20);
 
   function startRotate(e) {
     e.persist();
@@ -43,30 +43,39 @@ function Mindmap(props) {
     }
   }
 
+  function referParentObj() {
+    notes.subdata.forEach( (item) => {
+      item.parent = notes;
+    });
+  }referParentObj();
+
   function navigateNotes(nid) {
-    if(data[nid]){
-      setNotes(data[nid]);
-      console.log(nid.substring(0,3));
-    }
+      setNotes( (prevData) => {
+        return prevData.subdata[nid];
+      });
+  }
+
+  function goBack() {
+    setNotes(notes.parent);
   }
 
   return (<div>
-    {notes[1].id!== "a00" && <BreadCrumb />}
+    {!notes.id && <BreadCrumb onBack={goBack} text={notes.parent.data}/>}
     <div
       className="circular-container"
       onTouchMove={(e)=>rotateElements(e)}
       onTouchStart={(e)=>startRotate(e)}
       onTouchEnd={stopRotate}
       >
+      <NoteballMain text={notes.data} />
       {
-        notes.map((note, index) => {
-          if (index>1) {
+        notes.subdata.map((note, index) => {
             return (
               <div>
                 <Noteball
-                  key={note.id}
+                  key={index}
                   id={index}
-                  id2={note.id}
+                  id2={index}
                   angle={commAngle * index + rotAngle}
                   text={note.data}
                   onExplore={navigateNotes}
@@ -79,26 +88,6 @@ function Mindmap(props) {
                 />
               </div>
             );
-          }
-          else {
-            return (
-              <div>
-                <NoteballMain key={note.id} text={note.data} />
-                {notes.length<3 && (
-                  <div>
-                    <AddNote
-                      angle={rotAngle}
-                      onAdd={props.showNoteArea}
-                    />
-                    <AddNote
-                      angle={rotAngle+180}
-                      onAdd={props.showNoteArea}
-                    />
-                  </div>
-                )}
-              </div>
-            );
-          }
         })
       }
     </div>
