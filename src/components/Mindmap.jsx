@@ -10,9 +10,8 @@ import data from "../data";
 
 function Mindmap(props) {
 
-  let [notes, setNotes] = useState(data[0]);
-  let [prevNotes,setPrevNotes] = useState(data[0]);
-  let commAngle = 360 / (notes.subdata.length);
+  let [prevNotes,setPrevNotes] = useState(props.notes);
+  let commAngle = 360 / (props.notes.subdata.length);
   let offsetAngle = commAngle/2;
   let [shouldRotate, setShouldRotate] = useState(false);
   let [initialAngle, setInitialAngle] = useState(20);
@@ -44,8 +43,8 @@ function Mindmap(props) {
   }
 
   function referParentObj() {
-    notes.subdata.forEach( (item) => {
-      item.parent = notes;
+    props.notes.subdata.forEach( (item) => {
+      item.parent = props.notes;
     });
   }referParentObj();
 
@@ -56,20 +55,20 @@ function Mindmap(props) {
   }
 
   function goBack() {
-    setNotes(notes.parent);
+    setNotes(props.notes.parent);
   }
 
   return (<div>
-    {!notes.id && <BreadCrumb onBack={goBack} text={notes.parent.data}/>}
+    {!props.notes.id && <BreadCrumb onBack={goBack} text={props.notes.parent.title}/>}
     <div
       className="circular-container"
       onTouchMove={(e)=>rotateElements(e)}
       onTouchStart={(e)=>startRotate(e)}
       onTouchEnd={stopRotate}
       >
-      <NoteballMain text={notes.data} />
+      <NoteballMain text={props.notes.title} content={props.notes.noteContent} onEdit={props.showNoteArea} />
       {
-        notes.subdata.map((note, index) => {
+        props.notes.subdata.map((note, index) => {
             return (
               <div>
                 <Noteball
@@ -77,7 +76,7 @@ function Mindmap(props) {
                   id={index}
                   id2={index}
                   angle={commAngle * index + rotAngle}
-                  text={note.data}
+                  text={note.title}
                   onExplore={navigateNotes}
                 />
                 <AddNote

@@ -4,7 +4,7 @@ import FooterActionBtn from "./FooterActionBtn";
 import NoteTextArea from "./NoteTextArea";
 import NoteColorArea from "./NoteColorArea";
 
-function CreateNoteArea() {
+function CreateNoteArea(props) {
 
   let [textElseColor,setTextElseToggle] = useState("TEXT");
 
@@ -21,7 +21,7 @@ function CreateNoteArea() {
         <NoteHeaderBtn option="COLOR" onSelect={toggleTextAndColor} isActive={textElseColor} />
       </div>
       <div className="body-area">
-        {textElseColor === "TEXT" ? <NoteTextArea /> : <NoteColorArea />}
+        {textElseColor === "TEXT" ? <NoteTextArea inputValues={props.inputValues} passValue={props.getValues} /> : <NoteColorArea />}
       </div>
       <div className="footer-area">
         <FooterActionBtn action="cancel-btn" />
