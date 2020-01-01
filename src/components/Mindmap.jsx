@@ -42,24 +42,8 @@ function Mindmap(props) {
     }
   }
 
-  function referParentObj() {
-    props.notes.subdata.forEach( (item) => {
-      item.parent = props.notes;
-    });
-  }referParentObj();
-
-  function navigateNotes(nid) {
-      setNotes( (prevData) => {
-        return prevData.subdata[nid];
-      });
-  }
-
-  function goBack() {
-    setNotes(props.notes.parent);
-  }
-
   return (<div>
-    {!props.notes.id && <BreadCrumb onBack={goBack} text={props.notes.parent.title}/>}
+    {!props.notes.id && <BreadCrumb onBack={props.navBack} text={props.notes.parent.title}/>}
     <div
       className="circular-container"
       onTouchMove={(e)=>rotateElements(e)}
@@ -77,7 +61,7 @@ function Mindmap(props) {
                   id2={index}
                   angle={commAngle * index + rotAngle}
                   text={note.title}
-                  onExplore={navigateNotes}
+                  onExplore={props.navNotes}
                 />
                 <AddNote
                   key={index}

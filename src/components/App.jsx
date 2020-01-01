@@ -6,25 +6,61 @@ import data from "../data";
 
 function App() {
 
-  let [notes, setNotes] = useState(data[0]);
+  let mainData = data[0];
+  let [notes, setNotes] = useState(mainData);
   let [isNoteArea, setIsNoteArea] = useState(false);
   let [noteInputArea, setNoteInputArea] = useState({title:"",content:""});
+
+  function referParentObj() {
+    notes.subdata.forEach( (item) => {
+      item.parent = notes;
+    });
+  }referParentObj();
 
   function createAreaToggle(title,content) {
     setIsNoteArea(true);
     setNoteInputArea( () => {
-      return {title: title, content: content};
+      return {
+        title: title,
+        content: content
+      };
     })
   }
 
-  function updateValues() {
+  function navigateNotes(nid) {
+    setNotes( (prevData) => {
+      return prevData.subdata[nid];
+    });
+  }
 
+  function goBack() {
+    setNotes(notes.parent);
+  }
+
+  function updateValues(val) {
+      setIsNoteArea(false);
+      setNotes( prevValue => {
+        return {
+          ...prevValue,
+          title: val.title,
+          noteContent: val.content
+        };
+      });
   }
 
   return (
     <div>
-      <Mindmap showNoteArea={createAreaToggle} notes={notes} />
-      {isNoteArea && <CreateNoteArea inputValues={noteInputArea} getValues={updateValues} />}
+      <Mindmap
+        showNoteArea={createAreaToggle}
+        navNotes={navigateNotes}
+        navBack={goBack}
+        notes={notes}
+      />
+      {isNoteArea &&
+        <CreateNoteArea
+          inputValues={noteInputArea}
+          saveTemp={updateValues}
+        />}
     </div>
   );
 }

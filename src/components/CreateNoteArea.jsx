@@ -7,11 +7,16 @@ import NoteColorArea from "./NoteColorArea";
 function CreateNoteArea(props) {
 
   let [textElseColor,setTextElseToggle] = useState("TEXT");
+  let [tempNote,setTempNote] = useState({});
 
   function toggleTextAndColor(opt) {
     setTextElseToggle( () => {
       return opt;
     });
+  }
+
+  function getValues(val) {
+    setTempNote(val);
   }
 
   return (
@@ -21,11 +26,11 @@ function CreateNoteArea(props) {
         <NoteHeaderBtn option="COLOR" onSelect={toggleTextAndColor} isActive={textElseColor} />
       </div>
       <div className="body-area">
-        {textElseColor === "TEXT" ? <NoteTextArea inputValues={props.inputValues} passValue={props.getValues} /> : <NoteColorArea />}
+        {textElseColor === "TEXT" ? <NoteTextArea inputValues={props.inputValues} passValue={getValues} /> : <NoteColorArea />}
       </div>
       <div className="footer-area">
         <FooterActionBtn action="cancel-btn" />
-        <FooterActionBtn action="save-btn" />
+        <FooterActionBtn action="save-btn" onPress={ () => {props.saveTemp(tempNote)}} />
       </div>
     </div>
   );

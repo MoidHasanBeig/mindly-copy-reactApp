@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function NoteTextArea(props) {
 
   let [inputValue,setInputValue] = useState(props.inputValues);
+  
   props.passValue(inputValue);
 
   function updateInput(event) {
