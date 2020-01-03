@@ -1,24 +1,21 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import Mindmap from "./Mindmap"
 import CreateNoteArea from "./CreateNoteArea";
 
+import { traverseObj,updateMainData } from "../js/functions"
+
 import data from "../data";
+let mainData = data[0];
 
 function App() {
 
-  let mainData = data[0];
   let [notes, setNotes] = useState(mainData);
+  let [parentNote, setParentNote] =useState({});
   let [isNoteArea, setIsNoteArea] = useState(false);
   let [noteInputArea, setNoteInputArea] = useState({title:"",content:""});
 
-  function referParentObj() {
-    notes.subdata.forEach( (item) => {
-      item.parent = notes;
-    });
-  }referParentObj();
-
-  function createAreaToggle(title,content) {
-    setIsNoteArea(true);
+  function createAreaToggle(title,content,action) {
+    setIsNoteArea(action);
     setNoteInputArea( () => {
       return {
         title: title,
@@ -27,25 +24,37 @@ function App() {
     })
   }
 
-  function navigateNotes(nid) {
+  function navigateNotes(nid,pid) {
     setNotes( (prevData) => {
       return prevData.subdata[nid];
     });
+    let parent = traverseObj(mainData,pid);
+    setParentNote(parent);
   }
 
-  function goBack() {
-    setNotes(notes.parent);
+  function goBack(pid) {
+    let lvl = traverseObj(mainData,notes.pid);
+    setNotes(lvl);
+    let parent = traverseObj(mainData,pid);
+    setParentNote(parent);
   }
 
   function updateValues(val) {
       setIsNoteArea(false);
-      setNotes( prevValue => {
-        return {
-          ...prevValue,
-          title: val.title,
-          noteContent: val.content
-        };
-      });
+      if (isNoteArea === "edit") {
+        setNotes( prevValue => {
+          return {
+            ...prevValue,
+            title: val.title,
+            noteContent: val.content,
+          };
+        });
+        updateMainData(mainData,notes.id,val);
+      }
+
+      else if (isNoteArea === "add") {
+        
+      }
   }
 
   return (
@@ -55,6 +64,7 @@ function App() {
         navNotes={navigateNotes}
         navBack={goBack}
         notes={notes}
+        parent={parentNote}
       />
       {isNoteArea &&
         <CreateNoteArea

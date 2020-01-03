@@ -4,7 +4,7 @@ import AddNote from "./AddNote";
 import NoteballMain from "./NoteballMain";
 import BreadCrumb from "./BreadCrumb";
 
-import touchAngle from "../js/touchangle"
+import { touchAngle } from "../js/functions"
 
 import data from "../data";
 
@@ -43,7 +43,7 @@ function Mindmap(props) {
   }
 
   return (<div>
-    {!props.notes.id && <BreadCrumb onBack={props.navBack} text={props.notes.parent.title}/>}
+    { props.notes.id!=="a00" && <BreadCrumb onBack={props.navBack} text={props.parent.title} pid={props.parent.pid} /> }
     <div
       className="circular-container"
       onTouchMove={(e)=>rotateElements(e)}
@@ -57,7 +57,7 @@ function Mindmap(props) {
               <div>
                 <Noteball
                   key={index}
-                  id={index}
+                  pid={note.pid}
                   id2={index}
                   angle={commAngle * index + rotAngle}
                   text={note.title}
