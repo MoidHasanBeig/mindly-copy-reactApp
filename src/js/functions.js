@@ -29,11 +29,31 @@ function updateMainData(obj,id,val) {
   }
   else {
     for (let i=0;i<obj.subdata.length;i++) {
-      let found = updateMainData(obj.subdata[i],id,val);
+      updateMainData(obj.subdata[i],id,val);
+    }
+  }
+  return null;
+}
+
+function addNewNote(obj,id,val) {
+  let tempObj = {
+    title: val.title,
+    noteContent: val.content,
+    color: "#000",
+    pid: id,
+    id: "xyz001",
+    subdata: []
+  };
+  if (obj.id === id) {
+    obj.subdata.push(tempObj)
+  }
+  else {
+    for (let i=0;i<obj.subdata.length;i++) {
+      addNewNote(obj.subdata[i],id,val);
     }
   }
   return null;
 }
 
 
-export { touchAngle,traverseObj,updateMainData };
+export { touchAngle,traverseObj,updateMainData,addNewNote };

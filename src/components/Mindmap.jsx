@@ -58,7 +58,7 @@ function Mindmap(props) {
                 <Noteball
                   key={index}
                   pid={note.pid}
-                  id2={index}
+                  id2={note.id}
                   angle={commAngle * index + rotAngle}
                   text={note.title}
                   onExplore={props.navNotes}

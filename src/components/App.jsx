@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import Mindmap from "./Mindmap"
 import CreateNoteArea from "./CreateNoteArea";
 
-import { traverseObj,updateMainData } from "../js/functions"
+import { traverseObj,updateMainData,addNewNote } from "../js/functions"
 
 import data from "../data";
 let mainData = data[0];
@@ -10,7 +10,7 @@ let mainData = data[0];
 function App() {
 
   let [notes, setNotes] = useState(mainData);
-  let [parentNote, setParentNote] =useState({});
+  let [parentNote, setParentNote] = useState({});
   let [isNoteArea, setIsNoteArea] = useState(false);
   let [noteInputArea, setNoteInputArea] = useState({title:"",content:""});
 
@@ -25,11 +25,13 @@ function App() {
   }
 
   function navigateNotes(nid,pid) {
-    setNotes( (prevData) => {
-      return prevData.subdata[nid];
-    });
+    // setNotes( (prevData) => {
+    //   return prevData.subdata[nid];
+    // });
     let parent = traverseObj(mainData,pid);
     setParentNote(parent);
+    let currentNote = traverseObj(mainData,nid);
+    setNotes(currentNote);
   }
 
   function goBack(pid) {
@@ -53,7 +55,7 @@ function App() {
       }
 
       else if (isNoteArea === "add") {
-        
+        addNewNote(mainData,notes.id,val);
       }
   }
 
