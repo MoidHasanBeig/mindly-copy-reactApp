@@ -55,5 +55,21 @@ function addNewNote(obj,id,val) {
   return null;
 }
 
+function deleteSubNote(obj,id,pid) {
+  if (obj.id === id) {
+    
+  }
+  else {
+    for (let i=0;i<obj.subdata.length;i++) {
+      deleteSubNote(obj.subdata[i],id,pid);
+    }
+  }
+}
 
-export { touchAngle,traverseObj,updateMainData,addNewNote };
+
+export {
+  touchAngle,
+  traverseObj,
+  updateMainData,
+  addNewNote
+};

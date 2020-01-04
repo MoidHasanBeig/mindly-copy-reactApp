@@ -6,11 +6,8 @@ import BreadCrumb from "./BreadCrumb";
 
 import { touchAngle } from "../js/functions"
 
-import data from "../data";
-
 function Mindmap(props) {
 
-  let [prevNotes,setPrevNotes] = useState(props.notes);
   let commAngle = 360 / (props.notes.subdata.length);
   let offsetAngle = commAngle/2;
   let [shouldRotate, setShouldRotate] = useState(false);
@@ -34,6 +31,7 @@ function Mindmap(props) {
 
   function rotateElements(e) {
     e.persist();
+    props.deleteNote();
     if (shouldRotate) {
       setRotAngle( (prevAngle) => {
         let mouseAngle = touchAngle(e);
@@ -56,12 +54,14 @@ function Mindmap(props) {
             return (
               <div>
                 <Noteball
-                  key={index}
+                  key={note.id}
                   pid={note.pid}
+                  id={index}
                   id2={note.id}
                   angle={commAngle * index + rotAngle}
                   text={note.title}
                   onExplore={props.navNotes}
+                  deleteNote={props.deleteNote}
                 />
                 <AddNote
                   key={index}

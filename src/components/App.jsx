@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import Mindmap from "./Mindmap"
 import CreateNoteArea from "./CreateNoteArea";
+import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
 
 import { traverseObj,updateMainData,addNewNote } from "../js/functions"
 
@@ -13,6 +14,7 @@ function App() {
   let [parentNote, setParentNote] = useState({});
   let [isNoteArea, setIsNoteArea] = useState(false);
   let [noteInputArea, setNoteInputArea] = useState({title:"",content:""});
+  let [deleteConf,setDeleteConf] = useState(false);
 
   function createAreaToggle(title,content,action) {
     setIsNoteArea(action);
@@ -24,10 +26,29 @@ function App() {
     })
   }
 
+  let x;
+
+  function deleteOption() {
+      x = setTimeout( function() {
+        console.log("delete");
+        setDeleteConf(true);
+      }, 700);
+  }
+
+  function shouldDel(action) {
+    if (action === "del") {
+      deleteOption();
+    }
+    else {
+      clearTimeout(x);
+    }
+  }
+
+  function onDelete() {
+    // setDeleteConf(false);
+  }
+
   function navigateNotes(nid,pid) {
-    // setNotes( (prevData) => {
-    //   return prevData.subdata[nid];
-    // });
     let parent = traverseObj(mainData,pid);
     setParentNote(parent);
     let currentNote = traverseObj(mainData,nid);
@@ -44,13 +65,6 @@ function App() {
   function updateValues(val) {
       setIsNoteArea(false);
       if (isNoteArea === "edit") {
-        setNotes( prevValue => {
-          return {
-            ...prevValue,
-            title: val.title,
-            noteContent: val.content,
-          };
-        });
         updateMainData(mainData,notes.id,val);
       }
 
@@ -59,14 +73,21 @@ function App() {
       }
   }
 
+  function clickScreen() {
+    setDeleteConf(false);
+  }
+
   return (
-    <div>
+    <div onClick={clickScreen} className="app">
+      {deleteConf && <DeleteConfirmationDialog deleteAction={onDelete}/>}
       <Mindmap
         showNoteArea={createAreaToggle}
         navNotes={navigateNotes}
         navBack={goBack}
         notes={notes}
         parent={parentNote}
+        deleteNote={shouldDel}
+        clickScreen={clickScreen}
       />
       {isNoteArea &&
         <CreateNoteArea
