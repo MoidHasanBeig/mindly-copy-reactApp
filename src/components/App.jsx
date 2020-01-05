@@ -3,7 +3,7 @@ import Mindmap from "./Mindmap"
 import CreateNoteArea from "./CreateNoteArea";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
 
-import { traverseObj,updateMainData,addNewNote } from "../js/functions"
+import { traverseObj,updateMainData,addNewNote,deleteSubNote } from "../js/functions"
 
 import data from "../data";
 let mainData = data[0];
@@ -28,16 +28,16 @@ function App() {
 
   let x;
 
-  function deleteOption() {
+  function deleteOption(index) {
       x = setTimeout( function() {
         console.log("delete");
-        setDeleteConf(true);
+        setDeleteConf([true,index]);
       }, 700);
   }
 
-  function shouldDel(action) {
+  function shouldDel(action,index) {
     if (action === "del") {
-      deleteOption();
+      deleteOption(index);
     }
     else {
       clearTimeout(x);
@@ -46,6 +46,7 @@ function App() {
 
   function onDelete() {
     // setDeleteConf(false);
+    deleteSubNote(mainData,notes.id,deleteConf[1]);
   }
 
   function navigateNotes(nid,pid) {
