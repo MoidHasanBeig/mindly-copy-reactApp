@@ -41,7 +41,7 @@ function Mindmap(props) {
   }
 
   return (<div>
-    { props.notes.id!=="a00" && <BreadCrumb onBack={props.navBack} text={props.parent.title} pid={props.parent.pid} /> }
+    { props.notes.pid!=="home" && <BreadCrumb onBack={props.navBack} text={props.parent.title} pid={props.parent.pid} /> }
     <div
       className="circular-container"
       onTouchMove={(e)=>rotateElements(e)}

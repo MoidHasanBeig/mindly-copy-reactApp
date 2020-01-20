@@ -12,15 +12,16 @@ if(!saveData) {
   localStorage.setItem("mydb", JSON.stringify([]));
 }
 let retrieveData = JSON.parse(localStorage.getItem("mydb"));
-let mainData = retrieveData[0];
+let mainData;
 
 function App() {
   let [isHomeScreen,setIsHomeScreen] = useState(true);
-  let [notes, setNotes] = useState(mainData);
+  let [notes, setNotes] = useState();
   let [parentNote, setParentNote] = useState({});
   let [isNoteArea, setIsNoteArea] = useState(false);
   let [noteInputArea, setNoteInputArea] = useState({title:"",content:""});
   let [deleteConf,setDeleteConf] = useState(false);
+  let [selMap,setSelMap] = useState(0);
   // let a = [];
   // let a = JSON.parse(localStorage.getItem("mydb"));
   // localStorage.setItem("mydb", JSON.stringify(mainData));
@@ -35,9 +36,17 @@ function App() {
   }
 
   function createMap() {
-    setIsHomeScreen(false);
     document.documentElement.requestFullscreen();
     setIsNoteArea("newmap");
+  }
+
+  function navMap(index) {
+    setIsHomeScreen(false);
+    document.documentElement.requestFullscreen();
+    console.log(index);
+    mainData = retrieveData[index];
+    setNotes(mainData);
+    setSelMap(index);
   }
 
   let x;
@@ -60,7 +69,7 @@ function App() {
 
   function onDelete() {
     deleteSubNote(mainData,notes.id,deleteConf[1]);
-    retrieveData[0] = mainData;
+    retrieveData[selMap] = mainData;
     localStorage.setItem("mydb", JSON.stringify(retrieveData));
   }
 
@@ -82,14 +91,19 @@ function App() {
       setIsNoteArea(false);
       if (isNoteArea === "edit") {
         updateMainData(mainData,notes.id,val);
-        retrieveData[0] = mainData;
+        retrieveData[selMap] = mainData;
       }
       else if (isNoteArea === "add") {
         addNewNote(mainData,notes.id,val);
-        retrieveData[0] = mainData;
+        retrieveData[selMap] = mainData;
       }
       else if (isNoteArea === "newmap") {
         addNewMap(retrieveData,val);
+        let len = retrieveData.length;
+        mainData = retrieveData[len-1];
+        setNotes(mainData);
+        setSelMap(len);
+        setIsHomeScreen(false);
       }
       localStorage.setItem("mydb", JSON.stringify(retrieveData));
   }
@@ -104,6 +118,7 @@ function App() {
       {isHomeScreen
         ?<Home
           createMap={createMap}
+          navMap={navMap}
           data={retrieveData}
         />
         :<Mindmap

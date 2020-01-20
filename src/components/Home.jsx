@@ -1,5 +1,6 @@
 import React from "react";
 import NewMap from "./NewMap";
+import MapListItem from "./MapListItem";
 
 function Home(props) {
   return <div className="home-screen">
@@ -7,9 +8,10 @@ function Home(props) {
       createMap={props.createMap}
       text="+"
     />
-    {props.data.map( (datum) => {
-      return <NewMap
-        createMap={props.createMap}
+    {props.data.map( (datum,i) => {
+      return <MapListItem
+        key={i}
+        navMap={ () => props.navMap(i)}
         text={datum.title}
       />;
     })
