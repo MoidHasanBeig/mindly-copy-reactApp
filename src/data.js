@@ -1,6 +1,7 @@
 // let title = [0, 1, 2, 3, 4, 5];
 
-let data = [{
+let data = [
+  {
   id: "a00",
   title: "Welcome guide",
   noteContent: "abc",
@@ -112,7 +113,24 @@ let data = [{
       subdata: []
     }
   ]
-}];
+},
+{
+  id: "a01b02",
+  pid: "a01",
+  title: "Urdu",
+  noteContent: "abc",
+  color: "#000",
+  subdata: []
+},
+{
+  id: "a01b02",
+  pid: "a01",
+  title: "Urdu",
+  noteContent: "abc",
+  color: "#000",
+  subdata: []
+}
+];
 
 // let title = {
 //   a00: ["na",

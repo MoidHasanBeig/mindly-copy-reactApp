@@ -48,6 +48,18 @@ function Mindmap(props) {
       onTouchStart={(e)=>startRotate(e)}
       onTouchEnd={stopRotate}
       >
+      {props.notes.subdata.length === 0 &&
+        <div>
+          <AddNote
+            angle={90 + rotAngle}
+            onAdd={props.showNoteArea}
+          />
+          <AddNote
+            angle={270 + rotAngle}
+            onAdd={props.showNoteArea}
+          />
+        </div>
+      }
       <NoteballMain text={props.notes.title} content={props.notes.noteContent} onEdit={props.showNoteArea} />
       {
         props.notes.subdata.map((note, index) => {

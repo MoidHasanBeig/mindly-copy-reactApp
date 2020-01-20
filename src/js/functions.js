@@ -35,13 +35,25 @@ function updateMainData(obj,id,val) {
   return null;
 }
 
+function addNewMap(arr,val) {
+  let tempObj = {
+    title: val.title,
+    noteContent: val.content,
+    color: "#000",
+    pid: "home",
+    id: uniqueId(),
+    subdata: []
+  };
+  arr.push(tempObj);
+}
+
 function addNewNote(obj,id,val) {
   let tempObj = {
     title: val.title,
     noteContent: val.content,
     color: "#000",
     pid: id,
-    id: "xyz001",
+    id: uniqueId(),
     subdata: []
   };
   if (obj.id === id) {
@@ -66,11 +78,19 @@ function deleteSubNote(obj,id,index) {
   }
 }
 
+function uniqueId() {
+  let d = new Date();
+  let unID = d.getTime();
+  console.log(unID);
+  return unID;
+}
 
 export {
   touchAngle,
   traverseObj,
   updateMainData,
   addNewNote,
-  deleteSubNote
+  addNewMap,
+  deleteSubNote,
+  uniqueId
 };

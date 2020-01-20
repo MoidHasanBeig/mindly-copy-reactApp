@@ -2,7 +2,7 @@ import React from "react";
 
 function DeleteConfirmationDialog(props) {
   return (
-    <div className="delete-option" onClick={ () => {props.deleteAction("delCancel")}}>
+    <div className="delete-option" onClick={ () => {props.deleteConfirmed()}}>
       Delete
     </div>
   );

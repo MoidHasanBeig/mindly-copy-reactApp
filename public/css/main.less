@@ -1,12 +1,40 @@
+body {
+  overscroll-behavior: none;
+}
+
 #root {
   position: fixed;
   font-family: monospace;
   user-select: none;
+  text-align: center;
 
   .app {
     height: 100%;
     width: 100%;
     position: fixed;
+
+    .home-screen {
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      background: #fff;
+      z-index: 1;
+      overflow-y: auto;
+
+      .select-map {
+        position: relative;
+        p {
+          position: absolute;
+          margin: 0;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+          color: #EEE;
+        }
+      }
+    }
 
     .bread-crumb {
       position: fixed;
@@ -63,12 +91,11 @@
       }
     }
 
-    .noteball-main {
-    }
+    .noteball-main {}
 
     .addnote {
       z-index: 20;
-      background-image: url('../images/addnote.svg');
+      background-image: url("../images/addnote.svg");
       height: 15px;
       width: 15px;
       background-size: 100% 100%;
@@ -105,8 +132,8 @@
             padding: 0;
           }
         }
-
       }
+
       .body-area {
         height: -webkit-fill-available;
 
@@ -124,10 +151,10 @@
             svg {
               position: relative;
               top: 50%;
-              left: 50%;
-              transform: translate(-50%,-50%);
+              transform: translateY(-50%);
             }
           }
+
           .color-picker {
             display: flex;
             flex-wrap: wrap;
@@ -157,6 +184,7 @@
             border: 0;
             padding-left: 10px;
           }
+
           textarea {
             margin-top: 7px;
             height: -webkit-fill-available;
@@ -166,11 +194,13 @@
             padding-top: 10px;
           }
 
-          input::placeholder, textarea::placeholder {
+          input::placeholder,
+          textarea::placeholder {
             color: rgba(0,0,0,0.3);
           }
         }
       }
+
       .footer-area {
         position: fixed;
         right: 2.5%;
@@ -183,13 +213,14 @@
           position: relative;
 
           .save-btn {
-            background-image: url('../images/save.svg');
+            background-image: url("../images/save.svg");
             height: 55px;
             width: 55px;
             background-size: 100% 100%;
           }
+
           .cancel-btn {
-            background-image: url('../images/cancel.svg');
+            background-image: url("../images/cancel.svg");
             height: 55px;
             width: 55px;
             background-size: 100% 100%;
@@ -197,6 +228,5 @@
         }
       }
     }
-
   }
 }
