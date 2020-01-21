@@ -42,12 +42,15 @@ body {
       top: 0;
 
       p {
-        margin: 0;
+        margin: 11px;
         position: fixed;
         top: 5%;
         left: 15%;
         transform: translate(-50%,-50%);
         color: #EEE;
+        width: 30%;
+        overflow: hidden;
+        word-break: break-all;
       }
     }
 
@@ -91,7 +94,14 @@ body {
       }
     }
 
-    .noteball-main {}
+    .noteball-main {
+      p {
+        word-break: break-all;
+        width: 60%;
+        overflow: hidden;
+        max-height: 57%;
+      }
+    }
 
     .addnote {
       z-index: 20;
